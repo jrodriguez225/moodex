@@ -14,6 +14,6 @@ app.use(cors(corsOptions));
 app.use(morgan('dev'));
 
 // routes
-app.use('/api', require('./routes/user.routes'));
+app.use('/api', require('./routes/api.routes'));
 
 module.exports = app;

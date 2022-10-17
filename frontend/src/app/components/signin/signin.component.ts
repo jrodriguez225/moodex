@@ -3,14 +3,14 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.css']
+  selector: 'app-signIn',
+  templateUrl: './signIn.component.html',
+  styleUrls: ['./signIn.component.css']
 })
-export class SigninComponent implements OnInit {
+export class SignInComponent implements OnInit {
 
   user = {
-    email: '',
+    username: '',
     password: ''
   };
 
@@ -26,12 +26,12 @@ export class SigninComponent implements OnInit {
     this.authService.signIn(this.user)
       .subscribe(
         (res) => {
-          console.log(res);
-          localStorage.setItem('token', res.token);
-          this.router.navigate(['/private']);
+          this.authService.logIn(res);
         },
-        (err) => console.error(err)
-      );
+        (err) => {
+          console.error(err);
+          this.router.navigate(['/signIn']);
+          alert('¡El nombre de usuario y la contraseña no se corresponden!');
+        });
   }
-
 }

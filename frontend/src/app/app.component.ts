@@ -8,6 +8,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   
-  constructor(public authService: AuthService) {}
-
+  title = 'frontend';
+  
+  constructor(public authService: AuthService) { }
 }
