@@ -1,26 +1,30 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-// Components
-import { SignInComponent } from './components/signIn/signIn.component';
-import { PrivateComponent } from './components/private/private.component';
-
+import { LoginComponent } from './modules/login.module/login.component/login.component';
 import { AuthGuard } from './auth.guard';
+import { MainComponent } from './modules/main.module/main.component/main.component';
+import { PageNotFoundComponent } from './modules/shared.module/page-not-found.component/page-not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/signIn',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'signIn',
-    component: SignInComponent
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'private',
-    component: PrivateComponent,
+    path: 'main',
+    component: MainComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
   }
 ];
 
@@ -28,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
