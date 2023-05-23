@@ -1,8 +1,8 @@
 const moodle = require('../../work_tools/moodle');
 
-const data_login = {};
+const data_token = {};
 
-data_login.getToken = async (username, password, service) => {
+data_token.getToken = async (username, password, service) => {
     try {
         const url = 'http://localhost/login/token.php';
         const params = {
@@ -17,4 +17,4 @@ data_login.getToken = async (username, password, service) => {
     catch (error) {}
 };
 
-module.exports = data_login;
+module.exports = data_token;

@@ -11,7 +11,7 @@ moodle.get = async (url, params) => {
     }
 };
 
-moodle.getUsername = async (wstoken) => {
+moodle.getUserid = async (wstoken) => {
     try {
         const url = 'http://localhost/webservice/rest/server.php';
         const params = {
@@ -22,8 +22,8 @@ moodle.getUsername = async (wstoken) => {
             }
         };
         const response = await moodle.get(url, params);
-        const username = response.data.username;
-        return username;        
+        const userid = response.data.userid;
+        return userid;
     }
     catch (error) {}
 };

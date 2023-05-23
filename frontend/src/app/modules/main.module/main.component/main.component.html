@@ -1,1 +1,8 @@
-<p>¡Bienvenido {{username}}, se te ha asignado el rol de {{role}}!</p>
+<div class="container">
+    <ng-container *ngIf="role === 'manager'; else teacher">
+        <app-main-manager></app-main-manager>
+    </ng-container>
+    <ng-template #teacher>
+        <app-main-teacher></app-main-teacher>
+    </ng-template>
+</div>

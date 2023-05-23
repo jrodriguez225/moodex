@@ -11,6 +11,7 @@ export class SessionService {
   constructor(private router: Router, private modalService: ModalService) {}
 
   logout(error?: any) {
+    sessionStorage.removeItem('username');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('role');
     sessionStorage.removeItem('tokenValidity');

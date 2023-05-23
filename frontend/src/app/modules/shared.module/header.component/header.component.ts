@@ -12,4 +12,8 @@ export class HeaderComponent implements OnInit {
   constructor(public sessionService: SessionService) {}
 
   ngOnInit() {}
+
+  getUsername() {
+    return sessionStorage.getItem('username');
+  }
 }

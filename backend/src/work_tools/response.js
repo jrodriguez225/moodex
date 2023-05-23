@@ -5,45 +5,57 @@ response.getResponse = (code, body = null) => {
     let msg = '';
     // 200 (OK)
     if (code === 20000) {
-        msg = 'Token obtenido';
+        msg = 'Token y rol obtenidos';
     }
     else if (code === 20001) {
-        msg = 'Nombre de usuario obtenido';
+        msg = 'Cursos del profesor obtenidos';
+    }
+    else if (code === 20002) {
+        msg = 'Eventos de calendario de los alumnos del curso y número de alumnos del curso obtenidos';
     }
     // 400 (Bad Request)
     else if (code === 40000) {
-        msg = '¡No se ha obtenido el nombre de usuario o la contraseña, o uno de ellos no es una cadena!';
+        msg = '¡No se ha obtenido el nombre de usuario y la contraseña, o uno de ellos no es una cadena!';
     }
     else if (code === 40001) {
-        msg = '¡No se han obtenido todas las cabeceras de autorización necesarias!';
+        msg = '¡No se ha obtenido alguna de las cabeceras de autorización necesarias, o alguna de ellas no dispone del formato adecuado!';
     }
     else if (code === 40002) {
-        msg = '¡Alguna de las cabeceras de autorización no dispone de los datos necesarios, o alguno de ellos no es una cadena!';
-    }
-    else if (code === 40003) {
-        msg = '¡No se ha obtenido el nombre de usuario o no es una cadena!';
+        msg = '¡No se ha obtenido el identificador del curso, la fecha de comienzo del curso y la fecha de fin del curso, o uno de ellos no es un número natural!';
     }
     // 401 (Unauthorized)
     else if (code === 40100) {
-        msg = '¡No se ha obtenido el token dado que el nombre de usuario y la contraseña no corresponden a ningún usuario!';
+        msg = '¡No se han obtenido el token y el rol dado que el nombre de usuario y la contraseña no corresponden a ningún usuario!';
     }
     else if (code === 40101) {
         msg = '¡El token no es válido!';
     }
     else if (code === 40102) {
-        msg = '¡El rol no es válido!';
-    }
-    else if (code === 40103) {
         msg = '¡Lo sentimos, la sesión ha caducado!';
     }
     // 403 (Forbidden)
+    else if (code === 40300) {
+        msg = '¡El administrador no está autorizado a obtener los cursos que imparte!';
+    }
+    else if (code === 40301) {
+        msg = '¡El administrador no está autorizado a obtener los eventos de calendario de los alumnos del curso y el número de alumnos del curso!';
+    }
     // 404 (Not Found)
+    else if (code === 40400) {
+        msg = '¡No se ha encontrado la ruta solicitada!';
+    }
     // 500 (Internal Server Error)
     else if (code === 50000) {
-        msg = '¡Error interno del servidor, no se ha podido obtener el token!';
+        msg = '¡Error interno del servidor, no se han podido obtener el token y el rol del usuario!';
     }
     else if (code === 50001) {
-        msg = '¡Error interno del servidor, no se ha podido obtener el nombre de usuario!';
+        msg = '¡Error interno del servidor, no se ha podido obtener el identificador del usuario!';
+    }
+    else if (code === 50002) {
+        msg = '¡Error interno del servidor, no se han podido obtener los cursos que imparte el profesor!';
+    }
+    else if (code === 50003) {
+        msg = '¡Error interno del servidor, no se han podido obtener los eventos de calendario de los alumnos del curso y el número de alumnos del curso!';
     }
     return { status, code, msg, body };
 };

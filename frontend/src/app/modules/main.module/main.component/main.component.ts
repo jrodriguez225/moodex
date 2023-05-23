@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MainService } from '../../../services/webServices/main.service';
 import { SessionService } from '../../../services/generalServices/session.service';
 
 @Component({
@@ -10,26 +9,16 @@ import { SessionService } from '../../../services/generalServices/session.servic
 })
 export class MainComponent implements OnInit {
 
-  username;
   role;
 
-  constructor(private mainService: MainService, private sessionService: SessionService) {
-    this.username = '';
+  constructor(private sessionService: SessionService) {
     this.role = '';
   }
 
   ngOnInit() {
-    this.mainService.getMain().subscribe(
-      (data) => {
-        this.username = data.body.username;
-        const role = this.sessionService.getRole();
-        if (role) {
-          this.role = role;
-        }
-      },
-      (error) => {
-        this.sessionService.logout(error);
-      }
-    );
+    const role = this.sessionService.getRole();
+    if (role) {
+      this.role = role;
+    }
   }
 }

@@ -13,7 +13,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 			<p>{{ body }}</p>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-outline-primary" (click)="activeModal.close('Close click')">Aceptar</button>
+			<button type="button" ngbAutofocus class="btn btn-outline-primary" (click)="activeModal.close('Close click')">Aceptar</button>
 		</div>
 	`,
 })

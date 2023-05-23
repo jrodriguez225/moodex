@@ -1,4 +1,4 @@
-const data_login = require('../data_module/data_login');
+const data_token = require('../data_module/data_token');
 
 const coordination_login = {};
 
@@ -6,14 +6,14 @@ coordination_login.login = (username, password) => {
     return new Promise(async (resolve, reject) => {
         try {
             let token = null;
-            let serviceNum = 0;
+            let index = 0;
             const services = ['moodexmanagerws', 'moodexeditingteacherws', 'moodexteacherws'];
             let service = null;
-            while (!token && serviceNum<services.length) {
-                service = services[serviceNum];
-                const response = await data_login.getToken(username, password, service);
+            while (!token && index < services.length) {
+                service = services[index];
+                const response = await data_token.getToken(username, password, service);
                 token = response.data.token;
-                serviceNum++;
+                index++;
             }
             let data = null;
             if (token) {

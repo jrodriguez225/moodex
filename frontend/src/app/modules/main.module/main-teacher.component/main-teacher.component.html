@@ -1,0 +1,25 @@
+<h4 class="p-2">Página principal del profesor</h4>
+<ng-container *ngIf="courses.length !== 0; else noneCourses">
+    <div class="row">
+        <div class="col-4">
+            <h5 class="p-2 border-top border-bottom">Cursos</h5>
+            <div class="list-group" id="list-tab" role="tablist" style="width: fit-content;">
+                <ng-container *ngFor="let course of courses">
+                    <a class="list-group-item list-group-item-action list-group-item-primary border-0 rounded-3 mb-2" id="{{ 'list-' + course.coursename + '-list' }}" data-bs-toggle="list" href="{{ '#list-' + course.coursename }}" role="tab">{{ course.coursename }}</a>
+                </ng-container>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="tab-content" id="nav-tabContent">
+                <ng-container *ngFor="let course of courses">
+                    <div class="tab-pane fade" id="{{ 'list-' + course.coursename }}" role="tabpanel">
+                        <ngbd-datepicker [course]="course"></ngbd-datepicker>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-template #noneCourses>
+    <p class="px-2">No impartes ningún curso.</p>
+</ng-template>

@@ -1,5 +1,6 @@
 const { Router } = require('express');
 
+const utils = require('./utils');
 const moodle = require('./moodle');
 const response = require('./response');
 
@@ -10,25 +11,26 @@ middleware.use('/', async (req, res, next) => {
     try {
         const { authorization, expiration } = req.headers;
         const roleHeader = req.headers.role;
-        if (authorization && roleHeader && expiration) {
+        if (authorization && roleHeader && expiration &&
+            utils.headerFormat(authorization) && utils.headerFormat(roleHeader) && utils.headerFormat(expiration)) {
             const token = authorization.split(' ')[1];
             const role = roleHeader.split(' ')[1];
             const tokenValidity = expiration.split(' ')[1];
-            if (token && role && tokenValidity && typeof token === 'string' && typeof role === 'string' && typeof tokenValidity === 'string') {
-                const username = await moodle.getUsername(token);
-                if (username) {
-                    if (role === 'manager' || role === 'editingteacher' || role === 'teacher') {
-                        if (!expiredToken(tokenValidity)) {
-                            req.username = username;
-                            next();
-                        }
-                        else json = response.getResponse(40103);
+            if (token && role && tokenValidity &&
+                typeof token === 'string' &&
+                (role === 'manager' || role === 'editingteacher' || role === 'teacher') &&
+                utils.isISOString(tokenValidity)) {
+                const userid = await moodle.getUserid(token);
+                if (userid) {
+                    if (!(tokenValidity < new Date().toISOString())) {
+                        req.userid = userid;
+                        next();
                     }
                     else json = response.getResponse(40102);
                 }
                 else json = response.getResponse(40101);
             }
-            else json = response.getResponse(40002);
+            else json = response.getResponse(40001);
         }
         else json = response.getResponse(40001);
         if (json) {
@@ -42,10 +44,5 @@ middleware.use('/', async (req, res, next) => {
         res.status(status).json(json);
     }
 });
-
-function expiredToken (tokenValidity) {
-    const currentDateTime = new Date().toISOString();
-    return tokenValidity < currentDateTime;
-};
 
 module.exports = middleware;

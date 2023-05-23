@@ -5,18 +5,20 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header.component/header.component';
 import { PageNotFoundComponent } from './page-not-found.component/page-not-found.component';
 import { NgbdModalComponent } from './modal.component/modal.component';
+import { NgbdDatepicker } from './datepicker.component/datepicker.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     CommonModule,
     RouterModule
   ],
   providers: [
-    NgbdModalComponent
+    NgbdModalComponent,
+    NgbdDatepicker
   ],
   exports: [
     HeaderComponent
