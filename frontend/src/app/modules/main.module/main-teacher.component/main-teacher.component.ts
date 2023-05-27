@@ -10,20 +10,45 @@ import { SessionService } from '../../../services/generalServices/session.servic
 })
 export class MainTeacherComponent implements OnInit {
   
-  courses;
+  coursesInProgress;
+  futureCourses;
+  pastCourses;
 
   constructor(private coursesService: CoursesService, private sessionService: SessionService) {
-    this.courses = <any>[];
+    this.coursesInProgress = <any>[];
+    this.futureCourses = <any>[];
+    this.pastCourses = <any>[];
   }
 
   ngOnInit() {
     this.coursesService.getTeacherCourses().subscribe(
       (data) => {
-        this.courses = data.body;
+        const courses = data.body;
+        for (let index = 0; index < courses.length; index++) {
+          const course = courses[index];
+          const coursestartdate = this.getDate(course.coursestartdate);
+          const courseenddate = this.getDate(course.courseenddate);
+          if (coursestartdate <= new Date() && courseenddate > new Date()) {
+            this.coursesInProgress.push(course);
+          }
+          else if (coursestartdate > new Date()) {
+            this.futureCourses.push(course);
+          }
+          else if (courseenddate <= new Date()) {
+            this.pastCourses.push(course);
+          }
+        }
       },
       (error) => {
         this.sessionService.logout(error);
       }
     );
   }
+
+	getDate (date: { year: number, month: number, day: number}) {
+		const year = date.year;
+		const month = date.month - 1;
+		const day = date.day;
+		return new Date(year, month, day);
+	}
 }

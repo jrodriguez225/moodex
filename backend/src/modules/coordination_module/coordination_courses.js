@@ -85,15 +85,18 @@ cooordination_courses.getCourseStudentsCalendarEvents = (token, courseid, course
                         // por cada evento de calendario del curso
                         for (let eventsIndex = 0; eventsIndex < courseEvents.length; eventsIndex++) {
                             const event = courseEvents[eventsIndex];
-                            // obtener las fechas del evento de calendario
-                            const eventDates = utils.getDates(event.timestart, event.timeduration);
-                            // por cada fecha del evento de calendario
-                            for (let eventDatesIndex = 0; eventDatesIndex < eventDates.length; eventDatesIndex++) {
-                                const eventDate = eventDates[eventDatesIndex];
-                                // si no está ya en la lista
-                                if (!dates.some(date => utils.equalDates(eventDate, date))) {
-                                    // añadir la fecha a la lista
-                                    dates.push(eventDate);
+                            // si el evento de calendario es visible y es un evento de curso
+                            if (event.visible === 1 && event.eventtype === 'course') {
+                                // obtener las fechas del evento de calendario
+                                const eventDates = utils.getDates(event.timestart, event.timeduration);
+                                // por cada fecha del evento de calendario
+                                for (let eventDatesIndex = 0; eventDatesIndex < eventDates.length; eventDatesIndex++) {
+                                    const eventDate = eventDates[eventDatesIndex];
+                                    // si no está ya en la lista
+                                    if (!dates.some(date => utils.equalDates(eventDate, date))) {
+                                        // añadir la fecha a la lista
+                                        dates.push(eventDate);
+                                    }
                                 }
                             }
                         }

@@ -11,7 +11,7 @@ response.getResponse = (code, body = null) => {
         msg = 'Cursos del profesor obtenidos';
     }
     else if (code === 20002) {
-        msg = 'Eventos de calendario de los alumnos del curso y número de alumnos del curso obtenidos';
+        msg = 'Eventos de calendario y número de alumnos del curso obtenidos';
     }
     // 400 (Bad Request)
     else if (code === 40000) {
@@ -21,7 +21,7 @@ response.getResponse = (code, body = null) => {
         msg = '¡No se ha obtenido alguna de las cabeceras de autorización necesarias, o alguna de ellas no dispone del formato adecuado!';
     }
     else if (code === 40002) {
-        msg = '¡No se ha obtenido el identificador del curso, la fecha de comienzo del curso y la fecha de fin del curso, o uno de ellos no es un número natural!';
+        msg = '¡No se ha obtenido el identificador, la fecha de comienzo y la fecha de fin del curso, o uno de ellos no es un número natural!';
     }
     // 401 (Unauthorized)
     else if (code === 40100) {
@@ -38,7 +38,7 @@ response.getResponse = (code, body = null) => {
         msg = '¡El administrador no está autorizado a obtener los cursos que imparte!';
     }
     else if (code === 40301) {
-        msg = '¡El administrador no está autorizado a obtener los eventos de calendario de los alumnos del curso y el número de alumnos del curso!';
+        msg = '¡El administrador no está autorizado a obtener los eventos de calendario y el número de alumnos del curso!';
     }
     // 404 (Not Found)
     else if (code === 40400) {
@@ -55,7 +55,7 @@ response.getResponse = (code, body = null) => {
         msg = '¡Error interno del servidor, no se han podido obtener los cursos que imparte el profesor!';
     }
     else if (code === 50003) {
-        msg = '¡Error interno del servidor, no se han podido obtener los eventos de calendario de los alumnos del curso y el número de alumnos del curso!';
+        msg = '¡Error interno del servidor, no se han podido obtener los eventos de calendario y el número de alumnos del curso!';
     }
     return { status, code, msg, body };
 };

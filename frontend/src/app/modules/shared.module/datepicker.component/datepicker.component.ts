@@ -60,6 +60,10 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
 			.disabled {
 				color: #d3d3d3;
 			}
+			.selected {
+				color: white;
+				background-color: #007bff;
+			}
 			.grey {
 				color: white;
 				background-color: #808080;
@@ -72,11 +76,7 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
 				color: white;
 				background-color: #ff0000;
 			}
-			.selected {
-				color: white;
-				background-color: #007bff;
-			}
-			.not-selected:hover,
+			.focusable:hover,
 			.focused {
 				border: 1px solid #e6e6e6;
 			}
@@ -126,7 +126,11 @@ export class NgbdDatepicker implements OnInit {
 		if (disabled) {
 			style = `${style} disabled`;
 		}
+		else if (selected) {
+			style = `${style} selected`;
+		}
 		else {
+			style = `${style} focusable`;
 			let students = 0;
 			let enc = false;
 			let index = 0;
@@ -148,14 +152,8 @@ export class NgbdDatepicker implements OnInit {
 			else if (percentage > 50 && percentage <= 100) {
 				style = `${style} red`;
 			}
-			if (selected) {
-				style = `${style} selected`;
-			}
-			else {
-				style = `${style} not-selected`;
-				if (focused) {
-					style = `${style} focused`;
-				}
+			if (focused) {
+				style = `${style} focused`;
 			}
 		}
 		return style;
