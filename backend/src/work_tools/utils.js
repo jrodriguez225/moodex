@@ -35,10 +35,6 @@ utils.getDate = (unix_timestamp) => {
     return { year, month, day };
 };
 
-utils.equalDates = (date1, date2) => {
-    return date1.year === date2.year && date1.month === date2.month && date1.day === date2.day;
-};
-
 utils.getDates = (date, duration) => {
     const dates = [];
     const currentDate = new Date(date * 1000 + 28800000);
@@ -51,6 +47,10 @@ utils.getDates = (date, duration) => {
         currentDate.setDate(currentDate.getDate() + 1);
     }
     return dates;
+};
+
+utils.equalDates = (date1, date2) => {
+    return date1.year === date2.year && date1.month === date2.month && date1.day === date2.day;
 };
 
 module.exports = utils;

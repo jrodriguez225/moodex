@@ -36,9 +36,9 @@ communication_courses.post('/', (req, res) => {
     let json = null;
     if (body && Object.keys(body).length === 3) {
         const { courseid, coursestartdate, courseenddate } = body;
-        if (courseid && coursestartdate && courseenddate
-            && utils.isNaturalNumber(courseid) && utils.isNaturalNumber(coursestartdate) && utils.isNaturalNumber(courseenddate)
-            && courseenddate > coursestartdate) {
+        if (String(courseid) && String(coursestartdate) && String(courseenddate) &&
+            utils.isNaturalNumber(courseid) && utils.isNaturalNumber(coursestartdate) && utils.isNaturalNumber(courseenddate) &&
+            courseenddate >= coursestartdate) {
             const role = headers.role.split(' ')[1];
             const token = headers.authorization.split(' ')[1];
             if (role === 'editingteacher' || role === 'teacher') {

@@ -21,7 +21,7 @@ response.getResponse = (code, body = null) => {
         msg = '¡No se ha obtenido alguna de las cabeceras de autorización necesarias, o alguna de ellas no dispone del formato adecuado!';
     }
     else if (code === 40002) {
-        msg = '¡No se ha obtenido el identificador, la fecha de comienzo y la fecha de fin del curso, o uno de ellos no es un número natural!';
+        msg = '¡No se ha obtenido el identificador, la fecha de comienzo y la fecha de fin del curso, uno de ellos no es un número natural, o la fecha de comienzo es mayor a la fecha de fin del curso!';
     }
     // 401 (Unauthorized)
     else if (code === 40100) {

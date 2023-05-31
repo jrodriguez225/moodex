@@ -20,26 +20,17 @@ cooordination_courses.getTeacherCourses = (token, userid) => {
                 // obtener los usuarios del curso
                 response = await data_courses.getCourseUsers(token, courseid);
                 const users = response.data;
-                // recorrer la lista de usuarios del curso hasta dar con el usuario actual
-                let enc = false;
-                let usersIndex = 0;
-                while(!enc) {
-                    const user = users[usersIndex];
-                    // al encontrar al usuario actual
-                    if (userid === user.id) {
-                        // mirar si tiene rol de profesor
-                        const isTeacher = user.roles.some(role => role.shortname.includes('teacher'));
-                        // si lo tiene
-                        if (isTeacher) {
-                            // añadir el curso a la lista
-                            const coursename = course.shortname;
-                            const coursestartdate = utils.getDate(course.startdate);
-                            const courseenddate = utils.getDate(course.enddate);
-                            teacherCourses.push({ courseid, coursename, coursestartdate, courseenddate });
-                        }
-                        enc = true;
-                    }
-                    usersIndex++;
+                // obtener el usuario actual a partir de la lista de usuarios del curso
+                const user = users.filter(user => userid === user.id)[0];
+                // mirar si tiene rol de profesor
+                const isTeacher = user.roles.some(role => role.shortname === 'editingteacher' || role.shortname === 'teacher');
+                // si lo tiene
+                if (isTeacher) {
+                    // añadir el curso a la lista
+                    const coursename = course.shortname;
+                    const coursestartdate = utils.getDate(course.startdate);
+                    const courseenddate = utils.getDate(course.enddate);
+                    teacherCourses.push({ courseid, coursename, coursestartdate, courseenddate });
                 }
             }
             // devolver la lista
@@ -92,9 +83,9 @@ cooordination_courses.getCourseStudentsCalendarEvents = (token, courseid, course
                                 // por cada fecha del evento de calendario
                                 for (let eventDatesIndex = 0; eventDatesIndex < eventDates.length; eventDatesIndex++) {
                                     const eventDate = eventDates[eventDatesIndex];
-                                    // si no está ya en la lista
+                                    // si no está ya en la lista del alumno
                                     if (!dates.some(date => utils.equalDates(eventDate, date))) {
-                                        // añadir la fecha a la lista
+                                        // añadir la fecha a la lista del alumno
                                         dates.push(eventDate);
                                     }
                                 }
@@ -104,9 +95,9 @@ cooordination_courses.getCourseStudentsCalendarEvents = (token, courseid, course
                     // por cada fecha en la que el alumno tiene asignado al menos un evento de calendario
                     for (let datesIndex = 0; datesIndex < dates.length; datesIndex++) {
                         const date = dates[datesIndex];
-                        // si no está ya en la lista
+                        // si no está ya en la lista del curso
                         if (!events.some(event => utils.equalDates(date, event.date))) {
-                            // añadir la fecha a la lista
+                            // añadir la fecha a la lista del curso
                             events.push({ date, students: 1 });
                         }
                         // si lo está
@@ -118,7 +109,7 @@ cooordination_courses.getCourseStudentsCalendarEvents = (token, courseid, course
                     }
                 }
             }
-            // devolver la lista y el número total de alumnos
+            // devolver la lista del curso y el número total de alumnos
             resolve({ events, students });
         }
         catch (error) {
