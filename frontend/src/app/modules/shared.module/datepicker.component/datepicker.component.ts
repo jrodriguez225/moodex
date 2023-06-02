@@ -114,7 +114,7 @@ export class NgbdDatepicker implements OnInit {
 		const year = date.year;
 		const month = date.month - 1;
 		const day = date.day;
-		return Math.floor(new Date(year, month, day).getTime() / 1000);
+		return Math.floor(new Date(year, month, day).getTime() / 1000) - 28800;
 	}
 
 	isDisabled(date: NgbDate, current?: { year: number; month: number; }) {
@@ -131,26 +131,18 @@ export class NgbdDatepicker implements OnInit {
 		}
 		else {
 			style = `${style} focusable`;
-			let students = 0;
-			let enc = false;
-			let index = 0;
-			while (!enc && index < this.events.length) {
-				const event = this.events[index];
-				if (this.equalDates(date, event.date)) {
-					students = event.students;
-					enc = true;
+			const event = this.events.filter((event: { date: any; }) => this.equalDates(date, event.date))[0];
+			if (event) {
+				const percentage = event.students / this.students * 100;
+				if (percentage > 0 && percentage <= 25) {
+					style = `${style} grey`;
 				}
-				index++;
-			}
-			const percentage = students / this.students * 100;
-			if (percentage > 0 && percentage <= 25) {
-				style = `${style} grey`;
-			}
-			else if (percentage > 25 && percentage <= 50) {
-				style = `${style} orange`;
-			}
-			else if (percentage > 50 && percentage <= 100) {
-				style = `${style} red`;
+				else if (percentage > 25 && percentage <= 50) {
+					style = `${style} orange`;
+				}
+				else if (percentage > 50 && percentage <= 100) {
+					style = `${style} red`;
+				}
 			}
 			if (focused) {
 				style = `${style} focused`;

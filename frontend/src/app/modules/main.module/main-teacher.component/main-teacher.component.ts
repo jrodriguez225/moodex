@@ -28,13 +28,14 @@ export class MainTeacherComponent implements OnInit {
           const course = courses[index];
           const coursestartdate = this.getDate(course.coursestartdate);
           const courseenddate = this.getDate(course.courseenddate);
-          if (coursestartdate <= new Date() && courseenddate > new Date()) {
+          const date = new Date();
+          if (coursestartdate <= date && courseenddate > date) {
             this.coursesInProgress.push(course);
           }
-          else if (coursestartdate > new Date()) {
+          else if (coursestartdate > date) {
             this.futureCourses.push(course);
           }
-          else if (courseenddate <= new Date()) {
+          else if (courseenddate <= date) {
             this.pastCourses.push(course);
           }
         }
