@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {}
 
-  getUsername() {
-    return sessionStorage.getItem('username');
+  getFullname() {
+    return sessionStorage.getItem('fullname');
   }
 }

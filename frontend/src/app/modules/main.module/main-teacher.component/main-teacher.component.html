@@ -1,56 +1,51 @@
 <h4 class="p-2">Página principal del profesor</h4>
-<ng-container *ngIf="coursesInProgress.length !== 0 || futureCourses.length !== 0 || pastCourses.length !== 0; else noneCourses">
-    <div class="row">
-        <div class="col-4">
-            <div class="list-group" id="list-tab" role="tablist">
-                <h5 class="p-2 border-top border-bottom">Cursos</h5>
-                <ng-container *ngIf="coursesInProgress.length !== 0;">
-                    <h6 class="p-2 border-top border-bottom" style="width: 50%;">En progreso</h6>
-                    <ng-container *ngFor="let course of coursesInProgress">
-                        <a class="list-group-item list-group-item-action list-group-item-primary border-0 rounded-3 mb-2" style="width: fit-content;" id="{{ 'list-' + course.coursename + '-list' }}" data-bs-toggle="list" href="{{ '#list-' + course.coursename }}" role="tab">{{ course.coursename }}</a>
-                    </ng-container>
+<div class="row">
+    <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist">
+            <h5 class="p-2 border-top border-bottom">Cursos</h5>
+            <ng-container *ngIf="coursesInProgress.length > 0;">
+                <h6 class="p-2 border-top border-bottom" style="width: 50%;">En progreso</h6>
+                <ng-container *ngFor="let course of coursesInProgress">
+                    <a class="list-group-item list-group-item-action list-group-item-primary border-0 rounded-3 mb-2" style="width: fit-content;" id="{{ 'list-' + course.coursename + '-list' }}" data-bs-toggle="list" href="{{ '#list-' + course.coursename }}" role="tab">{{ course.coursename }}</a>
                 </ng-container>
-                <ng-container *ngIf="futureCourses.length !== 0;">
-                    <h6 class="p-2 border-top border-bottom" style="width: 50%;">Futuros</h6>
-                    <ng-container *ngFor="let course of futureCourses">
-                        <a class="list-group-item list-group-item-action list-group-item-primary border-0 rounded-3 mb-2" style="width: fit-content;" id="{{ 'list-' + course.coursename + '-list' }}" data-bs-toggle="list" href="{{ '#list-' + course.coursename }}" role="tab">{{ course.coursename }}</a>
-                    </ng-container>
+            </ng-container>
+            <ng-container *ngIf="futureCourses.length > 0;">
+                <h6 class="p-2 border-top border-bottom" style="width: 50%;">Futuros</h6>
+                <ng-container *ngFor="let course of futureCourses">
+                    <a class="list-group-item list-group-item-action list-group-item-primary border-0 rounded-3 mb-2" style="width: fit-content;" id="{{ 'list-' + course.coursename + '-list' }}" data-bs-toggle="list" href="{{ '#list-' + course.coursename }}" role="tab">{{ course.coursename }}</a>
                 </ng-container>
-                <ng-container *ngIf="pastCourses.length !== 0;">
-                    <h6 class="p-2 border-top border-bottom" style="width: 50%;">Pasados</h6>
-                    <ng-container *ngFor="let course of pastCourses">
-                        <a class="list-group-item list-group-item-action list-group-item-primary border-0 rounded-3 mb-2" style="width: fit-content;" id="{{ 'list-' + course.coursename + '-list' }}" data-bs-toggle="list" href="{{ '#list-' + course.coursename }}" role="tab">{{ course.coursename }}</a>
-                    </ng-container>
+            </ng-container>
+            <ng-container *ngIf="pastCourses.length > 0;">
+                <h6 class="p-2 border-top border-bottom" style="width: 50%;">Pasados</h6>
+                <ng-container *ngFor="let course of pastCourses">
+                    <a class="list-group-item list-group-item-action list-group-item-primary border-0 rounded-3 mb-2" style="width: fit-content;" id="{{ 'list-' + course.coursename + '-list' }}" data-bs-toggle="list" href="{{ '#list-' + course.coursename }}" role="tab">{{ course.coursename }}</a>
                 </ng-container>
-            </div>
-        </div>
-        <div class="col-8">
-            <div class="tab-content" id="nav-tabContent">
-                <ng-container *ngIf="coursesInProgress.length !== 0;">
-                    <ng-container *ngFor="let course of coursesInProgress">
-                        <div class="tab-pane fade" id="{{ 'list-' + course.coursename }}" role="tabpanel">
-                            <ngbd-datepicker [course]="course"></ngbd-datepicker>
-                        </div>
-                    </ng-container>
-                </ng-container>
-                <ng-container *ngIf="futureCourses.length !== 0;">
-                    <ng-container *ngFor="let course of futureCourses">
-                        <div class="tab-pane fade" id="{{ 'list-' + course.coursename }}" role="tabpanel">
-                            <ngbd-datepicker [course]="course"></ngbd-datepicker>
-                        </div>
-                    </ng-container>
-                </ng-container>
-                <ng-container *ngIf="pastCourses.length !== 0;">
-                    <ng-container *ngFor="let course of pastCourses">
-                        <div class="tab-pane fade" id="{{ 'list-' + course.coursename }}" role="tabpanel">
-                            <ngbd-datepicker [course]="course"></ngbd-datepicker>
-                        </div>
-                    </ng-container>
-                </ng-container>
-            </div>
+            </ng-container>
         </div>
     </div>
-</ng-container>
-<ng-template #noneCourses>
-    <p class="px-2">No impartes ningún curso.</p>
-</ng-template>
+    <div class="col-8">
+        <div class="tab-content" id="nav-tabContent">
+            <ng-container *ngIf="coursesInProgress.length > 0;">
+                <ng-container *ngFor="let course of coursesInProgress">
+                    <div class="tab-pane fade" id="{{ 'list-' + course.coursename }}" role="tabpanel">
+                        <ngbd-datepicker [course]="course" [state]="'inProgress'"></ngbd-datepicker>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="futureCourses.length > 0;">
+                <ng-container *ngFor="let course of futureCourses">
+                    <div class="tab-pane fade" id="{{ 'list-' + course.coursename }}" role="tabpanel">
+                        <ngbd-datepicker [course]="course" [state]="'future'"></ngbd-datepicker>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="pastCourses.length > 0;">
+                <ng-container *ngFor="let course of pastCourses">
+                    <div class="tab-pane fade" id="{{ 'list-' + course.coursename }}" role="tabpanel">
+                        <ngbd-datepicker [course]="course" [state]="'past'"></ngbd-datepicker>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>

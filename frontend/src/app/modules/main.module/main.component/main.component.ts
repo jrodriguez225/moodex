@@ -9,16 +9,7 @@ import { SessionService } from '../../../services/generalServices/session.servic
 })
 export class MainComponent implements OnInit {
 
-  role;
+  constructor(public sessionService: SessionService) {}
 
-  constructor(private sessionService: SessionService) {
-    this.role = '';
-  }
-
-  ngOnInit() {
-    const role = this.sessionService.getRole();
-    if (role) {
-      this.role = role;
-    }
-  }
+  ngOnInit() {}
 }

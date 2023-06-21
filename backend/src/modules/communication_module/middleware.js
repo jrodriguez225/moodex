@@ -1,28 +1,31 @@
 const { Router } = require('express');
 
-const utils = require('./utils');
-const moodle = require('./moodle');
-const response = require('./response');
+const utils = require('../../work_tools/utils');
+const data_user = require('../data_module/data_user');
+const response = require('../../work_tools/response');
 
 const middleware = Router();
 
 middleware.use('/', async (req, res, next) => {
     let json = null;
     try {
+        const platformHeader = req.headers.platform;
         const { authorization, expiration } = req.headers;
         const roleHeader = req.headers.role;
-        if (authorization && roleHeader && expiration &&
-            utils.headerFormat(authorization) && utils.headerFormat(roleHeader) && utils.headerFormat(expiration)) {
+        if (platformHeader && authorization && roleHeader && expiration &&
+            utils.headerFormat(platformHeader) && utils.headerFormat(authorization) && utils.headerFormat(roleHeader) && utils.headerFormat(expiration)) {
+            const platform = platformHeader.split(' ')[1];
             const token = authorization.split(' ')[1];
             const role = roleHeader.split(' ')[1];
             const tokenValidity = expiration.split(' ')[1];
-            if (token && role && tokenValidity &&
+            if (platform && token && role && tokenValidity &&
+                utils.urlFormat(platform) &&
                 typeof token === 'string' &&
-                (role === 'manager' || role === 'editingteacher' || role === 'teacher') &&
+                (role === 'manager' || role === 'teacher') &&
                 utils.isISOString(tokenValidity)) {
-                const userid = await moodle.getUserid(token);
+                const userid = await data_user.getUserid(platform, token);
                 if (userid) {
-                    if (!(tokenValidity < new Date().toISOString())) {
+                    if (tokenValidity >= new Date().toISOString()) {
                         req.userid = userid;
                         next();
                     }

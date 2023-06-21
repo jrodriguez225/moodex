@@ -9,7 +9,7 @@ export class CoursesService {
   private url;
 
   constructor(private httpClient: HttpClient) {
-    this.url = 'http://localhost:3000/api/courses';
+    this.url = 'http://localhost:3000/api/course';
   }
 
   getTeacherCourses() {

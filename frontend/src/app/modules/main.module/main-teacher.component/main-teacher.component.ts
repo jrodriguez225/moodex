@@ -28,14 +28,14 @@ export class MainTeacherComponent implements OnInit {
           const course = courses[index];
           const coursestartdate = this.getDate(course.coursestartdate);
           const courseenddate = this.getDate(course.courseenddate);
-          const date = new Date();
-          if (coursestartdate <= date && courseenddate > date) {
+          const today = new Date();
+          if (coursestartdate <= today && courseenddate > today) {
             this.coursesInProgress.push(course);
           }
-          else if (coursestartdate > date) {
+          else if (coursestartdate > today) {
             this.futureCourses.push(course);
           }
-          else if (courseenddate <= date) {
+          else if (courseenddate <= today) {
             this.pastCourses.push(course);
           }
         }
@@ -46,10 +46,13 @@ export class MainTeacherComponent implements OnInit {
     );
   }
 
-	getDate (date: { year: number, month: number, day: number}) {
+	getDate (date: { year: number, month: number, day: number, hour: number, minute: number, second: number}) {
 		const year = date.year;
 		const month = date.month - 1;
 		const day = date.day;
-		return new Date(year, month, day);
+    const hour = date.hour;
+    const minute = date.minute;
+    const second = date.second;
+		return new Date(year, month, day, hour, minute, second);
 	}
 }

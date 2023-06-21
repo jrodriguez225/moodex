@@ -2,34 +2,33 @@
     <div class="container">
         <ng-container *ngIf="!sessionService.loggedIn(); else loggedIn">
             <a class="navbar-brand" routerLink="/">Moodex</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/login" routerLinkActive="active">Iniciar sesión</a>
-                    </li>
-                </ul>
-            </div>
         </ng-container>
         <ng-template #loggedIn>
             <a class="navbar-brand" routerLink="/main">Moodex</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
+            <span class="navbar-text">
+              (Conectado a: <b>{{ sessionService.getPlatform() }}</b>)
+            </span>
+        </ng-template>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+                <ng-container *ngIf="!sessionService.loggedIn(); else loggedIn2">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/login" routerLinkActive="active">Iniciar sesión</a>
+                    </li>
+                </ng-container>
+                <ng-template #loggedIn2>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ getUsername() }}</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ getFullname() }}</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" style="cursor: pointer;" (click)="sessionService.logout()">Cerrar sesión</a>
                         </div>
                     </li>
-                </ul>
-            </div>
-        </ng-template>
+                </ng-template>
+            </ul>
+        </div>
     </div>
 </nav>

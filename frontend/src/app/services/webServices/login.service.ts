@@ -12,8 +12,9 @@ export class LoginService {
     this.url = 'http://localhost:3000/auth';
   }
 
-  login(username: string, password: string) {
+  login(platform: string, username: string, password: string) {
     const userData = {
+      platform,
       username,
       password
     };

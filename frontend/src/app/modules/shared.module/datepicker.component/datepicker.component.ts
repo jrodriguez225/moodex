@@ -1,6 +1,7 @@
 import { Injectable, Component, OnInit, Input } from '@angular/core';
 import { NgbDatepickerI18n, NgbDateStruct, NgbDatepickerModule, NgbCalendar, NgbDatepicker, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { CoursesService } from '../../../services/webServices/courses.service';
 import { SessionService } from '../../../services/generalServices/session.service';
@@ -45,7 +46,7 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
 @Component({
 	selector: 'ngbd-datepicker',
 	standalone: true,
-	imports: [NgbDatepickerModule, FormsModule],
+	imports: [NgbDatepickerModule, FormsModule, CommonModule],
 	templateUrl: './datepicker.component.html',
 	providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }],
 	styles: [
@@ -87,11 +88,13 @@ export class NgbdDatepicker implements OnInit {
 
 	model!: NgbDateStruct;
 	@Input() course;
+	@Input() state;
 	events;
 	students;
 
 	constructor(private coursesService: CoursesService, private sessionService: SessionService, private calendar: NgbCalendar) {
 		this.course = <any>{};
+		this.state = '';
 		this.events = <any>[];
 		this.students = 0;
 	}
@@ -110,11 +113,14 @@ export class NgbdDatepicker implements OnInit {
 		);
 	}
 
-	getUnixTimestamp (date: { year: number, month: number, day: number}) {
+	getUnixTimestamp (date: { year: number, month: number, day: number, hour: number, minute: number, second: number}) {
 		const year = date.year;
 		const month = date.month - 1;
 		const day = date.day;
-		return Math.floor(new Date(year, month, day).getTime() / 1000) - 28800;
+		const hour = date.hour;
+		const minute = date.minute;
+		const second = date.second;
+		return Math.floor(new Date(year, month, day, hour, minute, second).getTime() / 1000) - 21600;
 	}
 
 	isDisabled(date: NgbDate, current?: { year: number; month: number; }) {
@@ -131,9 +137,9 @@ export class NgbdDatepicker implements OnInit {
 		}
 		else {
 			style = `${style} focusable`;
-			const event = this.events.filter((event: { date: any; }) => this.equalDates(date, event.date))[0];
+			const event = this.events.filter((event: { date: { year: number, month: number, day: number }; }) => this.equalDates(date, event.date))[0];
 			if (event) {
-				const percentage = event.students / this.students * 100;
+				const percentage = event.students.length / this.students * 100;
 				if (percentage > 0 && percentage <= 25) {
 					style = `${style} grey`;
 				}

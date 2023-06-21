@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" style="display: flex; justify-content:center; align-items:center;">
 	<div class="col mb-2" style="max-width: fit-content;">
 		<ngb-datepicker #dp [(ngModel)]="model" [dayTemplate]="customDay" [minDate]="course.coursestartdate" [maxDate]="course.courseenddate" [markDisabled]="isDisabled"></ngb-datepicker>
 		<ng-template #customDay let-date let-disabled="disabled" let-focused="focused" let-selected="selected">
@@ -6,7 +6,7 @@
 		</ng-template>
 	</div>
 	<div class="col mb-2" style="max-width: 225px;">
-		<p class=" border-top border-bottom text-center">Porcentaje del alumnado que tiene al menos una tarea asignada ese día</p>
+		<p class="border-top border-bottom text-center">Porcentaje del alumnado que tiene al menos una tarea asignada ese día</p>
 		<ul class="list-group">
 			<li class="list-group-item d-flex justify-content-between align-items-center border-0">
 				<span class="custom-day">1</span>
@@ -26,28 +26,13 @@
 			</li>
 		</ul>
 	</div>
-	<div class="col mb-2" style="max-width: 225px;">
-		<p class=" border-top border-bottom text-center">Estado</p>
-		<ul class="list-group">
-			<li class="list-group-item d-flex justify-content-between align-items-center border-0">
-				<span class="custom-day disabled">1</span>
-				Deshabilitado
-			</li>
-			<li class="list-group-item d-flex justify-content-between align-items-center border-0">
-				<span class="custom-day selected">1</span>
-				Seleccionado
-			</li>
-			<li class="list-group-item d-flex justify-content-between align-items-center border-0">
-				<span class="custom-day focused">1</span>
-				Enfocado
-			</li>
-		</ul>
-	</div>
 </div>
 <hr/>
 <div class="text-center">
-	<button class="btn btn-sm btn-outline-primary me-2" (click)="selectToday(dp)">Hoy</button>
-	<button class="btn btn-sm btn-outline-primary me-2" (click)="navigateTo(dp)">Mes actual</button>
+    <ng-container *ngIf="state === 'inProgress';">
+		<button class="btn btn-sm btn-outline-primary me-2" (click)="selectToday(dp)">Hoy</button>
+		<button class="btn btn-sm btn-outline-primary me-2" (click)="navigateTo(dp)">Mes actual</button>
+    </ng-container>
 	<button class="btn btn-sm btn-outline-primary me-2" (click)="navigateTo(dp, 'start')">Inicio del curso</button>
 	<button class="btn btn-sm btn-outline-primary me-2" (click)="navigateTo(dp, 'end')">Final del curso</button>
 </div>

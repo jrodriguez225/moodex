@@ -14,6 +14,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const tokenizedReq = req.clone({
       setHeaders: {
+        Platform: `Bearer ${this.sessionService.getPlatform()}`,
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         Role: `Bearer ${this.sessionService.getRole()}`,
         Expiration: `Bearer ${sessionStorage.getItem('tokenValidity')}`

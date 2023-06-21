@@ -11,9 +11,10 @@ export class SessionService {
   constructor(private router: Router, private modalService: ModalService) {}
 
   logout(error?: any) {
-    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('platform');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('role');
+    sessionStorage.removeItem('fullname');
     sessionStorage.removeItem('tokenValidity');
     this.router.navigate(['/login']);
     if (error) {
@@ -27,5 +28,9 @@ export class SessionService {
 
   getRole() {
     return sessionStorage.getItem('role');
+  }
+
+  getPlatform() {
+    return sessionStorage.getItem('platform');
   }
 }

@@ -11,21 +11,21 @@ response.getResponse = (code, body = null) => {
         msg = 'Cursos del profesor obtenidos';
     }
     else if (code === 20002) {
-        msg = 'Eventos de calendario y número de alumnos del curso obtenidos';
+        msg = 'Eventos de calendario y número total de alumnos del curso obtenidos';
     }
     // 400 (Bad Request)
     else if (code === 40000) {
-        msg = '¡No se ha obtenido el nombre de usuario y la contraseña, o uno de ellos no es una cadena!';
+        msg = '¡No se han recibido la plataforma, el nombre de usuario y la contraseña, o la plataforma no dispone del formato de URL adecuado, o el nombre de usuario o la contraseña no es una cadena!';
     }
     else if (code === 40001) {
-        msg = '¡No se ha obtenido alguna de las cabeceras de autorización necesarias, o alguna de ellas no dispone del formato adecuado!';
+        msg = '¡No se ha recibido alguna de las cabeceras de autorización necesarias, o alguna de ellas no dispone del formato adecuado!';
     }
     else if (code === 40002) {
-        msg = '¡No se ha obtenido el identificador, la fecha de comienzo y la fecha de fin del curso, uno de ellos no es un número natural, o la fecha de comienzo es mayor a la fecha de fin del curso!';
+        msg = '¡No se han recibido el identificador, la fecha de comienzo y la fecha de fin del curso, o uno de ellos no es un número natural, o la fecha de comienzo es posterior a la fecha de fin del curso!';
     }
     // 401 (Unauthorized)
     else if (code === 40100) {
-        msg = '¡No se han obtenido el token y el rol dado que el nombre de usuario y la contraseña no corresponden a ningún usuario!';
+        msg = '¡No se han obtenido el token y el rol dado que el nombre de usuario y la contraseña no corresponden a ningún administrador ni a ningún docente de la plataforma!';
     }
     else if (code === 40101) {
         msg = '¡El token no es válido!';
@@ -38,7 +38,7 @@ response.getResponse = (code, body = null) => {
         msg = '¡El administrador no está autorizado a obtener los cursos que imparte!';
     }
     else if (code === 40301) {
-        msg = '¡El administrador no está autorizado a obtener los eventos de calendario y el número de alumnos del curso!';
+        msg = '¡El administrador no está autorizado a obtener los eventos de calendario y el número total de alumnos del curso!';
     }
     // 404 (Not Found)
     else if (code === 40400) {
@@ -49,13 +49,13 @@ response.getResponse = (code, body = null) => {
         msg = '¡Error interno del servidor, no se han podido obtener el token y el rol del usuario!';
     }
     else if (code === 50001) {
-        msg = '¡Error interno del servidor, no se ha podido obtener el identificador del usuario!';
+        msg = '¡Error interno del servidor, no se ha podido validar la petición debido a los datos de autorización!';
     }
     else if (code === 50002) {
         msg = '¡Error interno del servidor, no se han podido obtener los cursos que imparte el profesor!';
     }
     else if (code === 50003) {
-        msg = '¡Error interno del servidor, no se han podido obtener los eventos de calendario y el número de alumnos del curso!';
+        msg = '¡Error interno del servidor, no se han podido obtener los eventos de calendario y el número total de alumnos del curso!';
     }
     return { status, code, msg, body };
 };

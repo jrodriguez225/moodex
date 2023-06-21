@@ -1,18 +1,19 @@
 const { Router } = require('express');
 
-const cooordination_courses = require('../coordination_module/coordination_courses');
+const coordination_course = require('../coordination_module/coordination_course');
 const response = require('../../work_tools/response');
 const utils = require('../../work_tools/utils');
 
-const communication_courses = Router();
+const communication_course = Router();
 
-communication_courses.get('/', (req, res) => {
+communication_course.get('/', (req, res) => {
     const { headers, userid } = req;
     const role = headers.role.split(' ')[1];
+    const platform = headers.platform.split(' ')[1];
     const token = headers.authorization.split(' ')[1];
     let json = null;
-    if (role === 'editingteacher' || role === 'teacher') {
-        cooordination_courses.getTeacherCourses(token, userid)
+    if (role === 'teacher') {
+        coordination_course.getTeacherCourses(platform, token, userid)
             .then((courses) => {
                 json = response.getResponse(20001, courses);
                 const status = json.status;
@@ -31,7 +32,7 @@ communication_courses.get('/', (req, res) => {
     }
 });
 
-communication_courses.post('/', (req, res) => {
+communication_course.post('/', (req, res) => {
     const { body, headers } = req;
     let json = null;
     if (body && Object.keys(body).length === 3) {
@@ -40,9 +41,10 @@ communication_courses.post('/', (req, res) => {
             utils.isNaturalNumber(courseid) && utils.isNaturalNumber(coursestartdate) && utils.isNaturalNumber(courseenddate) &&
             courseenddate >= coursestartdate) {
             const role = headers.role.split(' ')[1];
+            const platform = headers.platform.split(' ')[1];
             const token = headers.authorization.split(' ')[1];
-            if (role === 'editingteacher' || role === 'teacher') {
-                cooordination_courses.getCourseStudentsCalendarEvents(token, courseid, coursestartdate, courseenddate)
+            if (role === 'teacher') {
+                coordination_course.getCourseStudentsCalendarEvents(platform, token, courseid, coursestartdate, courseenddate)
                     .then((data) => {
                         json = response.getResponse(20002, data);
                         const status = json.status;
@@ -65,4 +67,4 @@ communication_courses.post('/', (req, res) => {
     }
 });
 
-module.exports = communication_courses;
+module.exports = communication_course;

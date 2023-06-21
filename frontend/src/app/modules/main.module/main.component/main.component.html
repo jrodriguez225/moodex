@@ -1,5 +1,5 @@
 <div class="container">
-    <ng-container *ngIf="role === 'manager'; else teacher">
+    <ng-container *ngIf="sessionService.getRole() === 'manager'; else teacher">
         <app-main-manager></app-main-manager>
     </ng-container>
     <ng-template #teacher>
